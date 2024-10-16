@@ -1,15 +1,20 @@
 import type { FunctionComponent } from "react";
 
 import { SignInButton, SignUpButton } from "@clerk/tanstack-start";
+import { Button } from "../ui/button";
 
 export const LoggedOut: FunctionComponent = () => {
   return (
     <>
       <p>You are signed out</p>
 
-      <SignInButton />
+      <Button asChild>
+        <SignInButton />
+      </Button>
 
-      <SignUpButton />
+      <Button asChild>
+        <SignUpButton />
+      </Button>
     </>
   );
 };
