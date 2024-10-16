@@ -4,8 +4,8 @@ import { eq } from "drizzle-orm";
 
 import type { User } from "@clerk/tanstack-start/server";
 
-import { db } from "../../../db";
-import { users } from "../../../db/schema";
+import { db } from "../../server/db";
+import { users } from "../../server/db/schema";
 
 enum EventType {
   CREATED = "user.created",
