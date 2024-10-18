@@ -5,13 +5,15 @@ import { Dashboard } from "./dashboard/dashboard";
 
 export const AppWrapper = () => {
   return (
-    <section className="container">
-      <SignedIn>
-        <Dashboard />
-      </SignedIn>
-      <SignedOut>
-        <LoggedOut />
-      </SignedOut>
+    <section className="min-h-screen w-screen">
+      <div className="container">
+        <SignedIn>
+          <Dashboard />
+        </SignedIn>
+        <SignedOut>
+          <LoggedOut />
+        </SignedOut>
+      </div>
     </section>
   );
 };
