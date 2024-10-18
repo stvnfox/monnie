@@ -1,15 +1,25 @@
-import type { FunctionComponent } from "react";
+import type { Portfolio } from "~/types/portfolios";
 
-import { UserButton, SignOutButton } from "@clerk/tanstack-start";
+import { CreatePortfolioDialog } from "./components/create-portfolio-dialog";
 
-export const Dashboard: FunctionComponent = () => {
+export const Dashboard = ({ data }: { data: Portfolio[] }) => {
+  const hasPortfolioEntries = data.length > 0;
+
   return (
     <>
-      <p>You are signed in</p>
-
-      <UserButton />
-
-      <SignOutButton />
+      {hasPortfolioEntries ? (
+        <div>{JSON.stringify(data)}</div>
+      ) : (
+        <section className="text-center mt-12">
+          <h1 className="text-2xl font-bold mb-4">
+            no portfolio items found yet
+          </h1>
+          <p>click below to start tracking by adding a portfolio item</p>
+        </section>
+      )}
+      <div className="mt-6">
+        <CreatePortfolioDialog />
+      </div>
     </>
   );
 };
