@@ -1,13 +1,20 @@
-import type { Portfolio } from "~/types/portfolios";
+import type { FunctionComponent } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+import { getPortfolioItems } from "~/queries/get-portfolio-items";
 
 import { CreatePortfolioDialog } from "./components/create-portfolio-dialog";
 
-export const Dashboard = ({ data }: { data: Portfolio[] }) => {
-  const hasPortfolioEntries = data.length > 0;
+export const Dashboard: FunctionComponent = () => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["portfolios"],
+    queryFn: () => getPortfolioItems(),
+    staleTime: 1000 * 60 * 60 * 24,
+  });
 
   return (
     <>
-      {hasPortfolioEntries ? (
+      {data ? (
         <div>{JSON.stringify(data)}</div>
       ) : (
         <section className="text-center mt-12">
