@@ -17,11 +17,13 @@ import { Route as IndexImport } from './routes/index'
 // Create/Update Routes
 
 const PortfolioRoute = PortfolioImport.update({
+  id: '/portfolio',
   path: '/portfolio',
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
+  id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)

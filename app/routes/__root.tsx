@@ -3,6 +3,9 @@ import { createRootRoute } from "@tanstack/react-router";
 import { Outlet, ScrollRestoration } from "@tanstack/react-router";
 import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
 import { ClerkProvider } from "@clerk/tanstack-start";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import { Toaster } from "~/components/ui/toaster";
 
 import appCss from "../styles/app.css?url";
 
@@ -31,19 +34,24 @@ function RootComponent() {
   );
 }
 
+const queryClient = new QueryClient();
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <Html>
-        <Head>
-          <Meta />
-        </Head>
-        <Body>
-          {children}
-          <ScrollRestoration />
-          <Scripts />
-        </Body>
-      </Html>
+      <QueryClientProvider client={queryClient}>
+        <Html>
+          <Head>
+            <Meta />
+          </Head>
+          <Body>
+            {children}
+            <Toaster />
+            <ScrollRestoration />
+            <Scripts />
+          </Body>
+        </Html>
+      </QueryClientProvider>
     </ClerkProvider>
   );
 }

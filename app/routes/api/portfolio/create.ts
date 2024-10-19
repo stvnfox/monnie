@@ -1,6 +1,7 @@
 import { getAuth } from "@clerk/tanstack-start/server";
 import { json } from "@tanstack/start";
 import { createAPIFileRoute } from "@tanstack/start/api";
+
 import { db } from "~/server/db";
 import { portfolios } from "~/server/db/schema";
 
@@ -15,7 +16,7 @@ export const Route = createAPIFileRoute("/api/portfolio/create")({
 
     try {
       await db.insert(portfolios).values({
-        userId: "test",
+        userId: userId,
         name: formattedPayload.name,
       });
 

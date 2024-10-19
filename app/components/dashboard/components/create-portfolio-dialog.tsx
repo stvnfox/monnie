@@ -1,11 +1,10 @@
-import type { FunctionComponent } from "react";
+import { useState, type FunctionComponent } from "react";
 
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -13,8 +12,10 @@ import {
 import { CreatePortfolioForm } from "./create-portfolio-form";
 
 export const CreatePortfolioDialog: FunctionComponent = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="h-24 p-4">
           create portfolio item
@@ -29,13 +30,8 @@ export const CreatePortfolioDialog: FunctionComponent = () => {
             or savings plans. give your portfolio a clear, descriptive name.
           </DialogDescription>
         </DialogHeader>
-
         <div className="grid gap-4 py-4">
-          <CreatePortfolioForm>
-            <DialogFooter>
-              <Button type="submit">create</Button>
-            </DialogFooter>
-          </CreatePortfolioForm>
+          <CreatePortfolioForm setOpen={setOpen} />
         </div>
       </DialogContent>
     </Dialog>
