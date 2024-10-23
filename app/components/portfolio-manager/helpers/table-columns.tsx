@@ -39,7 +39,11 @@ export const columns: ColumnDef<Portfolio>[] = [
               <TooltipContent align="start">{portfolio.type}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <Link to="/portfolio/$id" params={{ id: portfolio.id.toString() }}>
+          <Link
+            to="/portfolio/$id"
+            params={{ id: portfolio.id.toString() }}
+            className="w-full"
+          >
             {portfolio.name}
           </Link>
         </div>
