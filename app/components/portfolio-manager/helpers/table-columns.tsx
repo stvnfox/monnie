@@ -34,7 +34,7 @@ export const columns: ColumnDef<Portfolio>[] = [
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger>
-                <IconComponent className="h-4 w-4" />
+                <IconComponent className="h-4 w-4 stroke-neutral-400" />
               </TooltipTrigger>
               <TooltipContent align="start">{portfolio.type}</TooltipContent>
             </Tooltip>
