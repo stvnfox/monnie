@@ -3,9 +3,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link } from "lucide-react";
 
-import { createPortfolio } from "~/queries/create-portfolio";
 import { useToast } from "~/hooks/use-toast";
+import { createPortfolio } from "~/queries/create-portfolio";
+import { PORTFOLIO_TYPES } from "~/types/portfolios";
+import { PORTFOLIO_OPTIONS } from "~/lib/portfolio-options";
 
 import {
   Form,
@@ -18,6 +21,14 @@ import {
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Spinner } from "~/components/ui/spinner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { getTypeIcon } from "../helpers/type-icons";
 
 type CreatePortfolioFormProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,6 +36,7 @@ type CreatePortfolioFormProps = {
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
+  type: z.nativeEnum(PORTFOLIO_TYPES),
 });
 
 export const CreatePortfolioForm: FunctionComponent<
@@ -34,6 +46,7 @@ export const CreatePortfolioForm: FunctionComponent<
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      type: "personal",
     },
   });
 
@@ -50,7 +63,7 @@ export const CreatePortfolioForm: FunctionComponent<
   };
 
   const mutation = useMutation({
-    mutationFn: (values: { name: string }) => createPortfolio(values),
+    mutationFn: (values: z.infer<typeof formSchema>) => createPortfolio(values),
     onSuccess: () => handleSuccessState(),
   });
 
@@ -69,6 +82,37 @@ export const CreatePortfolioForm: FunctionComponent<
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>type</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="select a type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {PORTFOLIO_OPTIONS.map((option) => {
+                    const IconComponent = getTypeIcon(option.label);
+
+                    return (
+                      <SelectItem key={option.value} value={option.value}>
+                        <div className="flex gap-2 items-center">
+                          <IconComponent className="h-4 w-4" />
+                          {option.label}
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

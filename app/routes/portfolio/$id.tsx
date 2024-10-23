@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
 import { portfolios } from "~/server/db/schema";
 
-const getPortfolios = createServerFn("GET", async (_, { request }) => {
+const getPortfolio = createServerFn("GET", async (id: string, { request }) => {
   const { userId } = await getAuth(request);
 
   if (!userId) {
@@ -18,17 +18,17 @@ const getPortfolios = createServerFn("GET", async (_, { request }) => {
   const data = await db
     .select()
     .from(portfolios)
-    .where(eq(portfolios.userId, userId));
+    .where(eq(portfolios.id, Number(id)));
 
   return data;
 });
 
-export const Route = createFileRoute("/portfolio")({
-  loader: async () => await getPortfolios(),
-  component: PortfolioManager,
+export const Route = createFileRoute("/portfolio/$id")({
+  loader: async ({ params }) => await getPortfolio(params.id),
+  component: () => <Portfolio />,
 });
 
-function PortfolioManager() {
+function Portfolio() {
   const state = Route.useLoaderData();
 
   return <div>{JSON.stringify(state)}</div>;

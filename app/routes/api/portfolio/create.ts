@@ -18,6 +18,7 @@ export const Route = createAPIFileRoute("/api/portfolio/create")({
       await db.insert(portfolios).values({
         userId: userId,
         name: formattedPayload.name,
+        type: formattedPayload.type,
       });
 
       return json({

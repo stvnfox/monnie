@@ -9,6 +9,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+import { PORTFOLIO_TYPES, type PortfolioType } from "~/types/portfolios";
 
 export const users = pgTable("users", {
   id: varchar("id").primaryKey(),
@@ -22,6 +23,10 @@ export const portfolios = pgTable("portfolios", {
     .references(() => users.id)
     .notNull(),
   name: text("name").notNull(),
+  type: text("type")
+    .notNull()
+    .default(PORTFOLIO_TYPES.PERSONAL)
+    .$type<PortfolioType>(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

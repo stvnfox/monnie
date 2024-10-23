@@ -17,7 +17,7 @@ export const CreatePortfolioDialog: FunctionComponent = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="h-24 p-4">
+        <Button variant="outline" className="p-4">
           create portfolio item
         </Button>
       </DialogTrigger>

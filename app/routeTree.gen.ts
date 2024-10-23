@@ -11,20 +11,20 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as PortfolioImport } from './routes/portfolio'
 import { Route as IndexImport } from './routes/index'
+import { Route as PortfolioIdImport } from './routes/portfolio/$id'
 
 // Create/Update Routes
-
-const PortfolioRoute = PortfolioImport.update({
-  id: '/portfolio',
-  path: '/portfolio',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PortfolioIdRoute = PortfolioIdImport.update({
+  id: '/portfolio/$id',
+  path: '/portfolio/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +39,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/portfolio': {
-      id: '/portfolio'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof PortfolioImport
+    '/portfolio/$id': {
+      id: '/portfolio/$id'
+      path: '/portfolio/$id'
+      fullPath: '/portfolio/$id'
+      preLoaderRoute: typeof PortfolioIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio/$id': typeof PortfolioIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio/$id': typeof PortfolioIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio/$id': typeof PortfolioIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/portfolio'
+  fullPaths: '/' | '/portfolio/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/portfolio'
-  id: '__root__' | '/' | '/portfolio'
+  to: '/' | '/portfolio/$id'
+  id: '__root__' | '/' | '/portfolio/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PortfolioRoute: typeof PortfolioRoute
+  PortfolioIdRoute: typeof PortfolioIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PortfolioRoute: PortfolioRoute,
+  PortfolioIdRoute: PortfolioIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -99,14 +99,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/portfolio"
+        "/portfolio/$id"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/portfolio": {
-      "filePath": "portfolio.tsx"
+    "/portfolio/$id": {
+      "filePath": "portfolio/$id.tsx"
     }
   }
 }

@@ -1,4 +1,7 @@
-export const createPortfolio = async (values: { name: string }) => {
+export const createPortfolio = async (values: {
+  name: string;
+  type: string;
+}) => {
   const response = await fetch("/api/portfolio/create", {
     method: "POST",
     body: JSON.stringify(values),
