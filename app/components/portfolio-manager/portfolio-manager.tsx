@@ -24,7 +24,7 @@ export const PortfolioManager: FunctionComponent = () => {
         <CreatePortfolioDialog />
       </div>
       {isLoading && <SkeletonTable />}
-      {isError && <div>error</div>}
+      {isError && <div>something went wrong. please try again later.</div>}
       {portfolios && <DataTable columns={columns} data={portfolios} />}
     </section>
   );
