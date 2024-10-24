@@ -6,11 +6,11 @@ export const SkeletonTable: FunctionComponent = () => {
     <div className="rounded-md">
       <div className="border rounded-t-md">
         <div className="h-12 flex items-center px-4">
-          <Skeleton className="w-12 h-3 rounded-md" />
+          <Skeleton className="w-9 h-3 rounded-md" />
         </div>
       </div>
       <div className="border rounded-b-md border-t-0 py-6">
-        <div className="flex flex-col gap-4 px-4">
+        <div className="flex flex-col gap-4 pl-4 pr-6">
           <SkeletonTableRow />
           <SkeletonTableRow />
           <SkeletonTableRow />
