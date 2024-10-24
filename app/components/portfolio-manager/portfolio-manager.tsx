@@ -6,6 +6,7 @@ import { columns } from "./helpers/table-columns";
 
 import { CreatePortfolioDialog } from "./components/create-portfolio-dialog";
 import { DataTable } from "../ui/data-table";
+import { SkeletonTable } from "./components/skeleton-table";
 
 export const PortfolioManager: FunctionComponent = () => {
   const { data, isLoading, isError } = useQuery({
@@ -22,9 +23,9 @@ export const PortfolioManager: FunctionComponent = () => {
         <h1>portfolio's</h1>
         <CreatePortfolioDialog />
       </div>
-      {isLoading && <div>loading...</div>}
+      {isLoading && <SkeletonTable />}
       {isError && <div>error</div>}
-      {data && <DataTable columns={columns} data={portfolios} />}
+      {portfolios && <DataTable columns={columns} data={portfolios} />}
     </section>
   );
 };
