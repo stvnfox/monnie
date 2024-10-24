@@ -14,7 +14,7 @@
   "license": "ISC",
   "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
   "dependencies": {
-    "@clerk/tanstack-start": "^0.4.16",
+    "@clerk/tanstack-start": "^0.4.17",
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.10.1",
     "@radix-ui/react-dialog": "^1.1.2",
@@ -24,7 +24,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
     "@radix-ui/react-tooltip": "^1.1.3",
-    "@tanstack/react-query": "^5.59.15",
+    "@tanstack/react-query": "^5.59.16",
     "@tanstack/react-router": "^1.76.1",
     "@tanstack/react-table": "^8.20.5",
     "@tanstack/start": "^1.76.1",
