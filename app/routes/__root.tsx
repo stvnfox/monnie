@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "~/components/ui/toaster";
 
 import appCss from "../styles/app.css?url";
+import favicon from "../assets/favicon.ico?url";
 
 export const Route = createRootRoute({
   meta: () => [
@@ -22,7 +23,10 @@ export const Route = createRootRoute({
       title: "monnie",
     },
   ],
-  links: () => [{ rel: "stylesheet", href: appCss }],
+  links: () => [
+    { rel: "stylesheet", href: appCss },
+    { rel: "icon", href: favicon },
+  ],
   component: RootComponent,
 });
 
