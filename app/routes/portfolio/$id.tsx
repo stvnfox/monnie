@@ -3,6 +3,10 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/start";
 import { eq } from "drizzle-orm";
 
+import { NavigationComponent } from "~/components/navigation/navigation";
+import { PortfolioDetailWrapper } from "~/components/portfolio-detail-wrapper/portfolio-detail-wrapper";
+
+import type { Portfolio } from "~/types/portfolios";
 import { db } from "~/server/db";
 import { portfolios } from "~/server/db/schema";
 
@@ -20,16 +24,23 @@ const getPortfolio = createServerFn("GET", async (id: string, { request }) => {
     .from(portfolios)
     .where(eq(portfolios.id, Number(id)));
 
-  return data;
+  return data[0];
 });
 
 export const Route = createFileRoute("/portfolio/$id")({
   loader: async ({ params }) => await getPortfolio(params.id),
-  component: () => <Portfolio />,
+  component: () => <PortfolioPage />,
 });
 
-function Portfolio() {
-  const state = Route.useLoaderData();
+function PortfolioPage() {
+  const state: Portfolio = Route.useLoaderData();
 
-  return <div>{JSON.stringify(state)}</div>;
+  return (
+    <section className="min-h-screen w-screen">
+      <div className="container">
+        <NavigationComponent />
+        <PortfolioDetailWrapper portfolio={state} />
+      </div>
+    </section>
+  );
 }
