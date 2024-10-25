@@ -1,15 +1,19 @@
+import { useState } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Portfolio } from "~/types/portfolios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, MoreHorizontal, Trash } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
+import type { Portfolio } from "~/types/portfolios";
 import { getTypeIcon } from "./type-icons";
+import { removePortfolio } from "~/queries/remove-portfolio";
+import { useToast } from "~/hooks/use-toast";
 
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
@@ -19,7 +23,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { Link } from "@tanstack/react-router";
+import { Spinner } from "~/components/ui/spinner";
 
 export const columns: ColumnDef<Portfolio>[] = [
   {
@@ -55,9 +59,31 @@ export const columns: ColumnDef<Portfolio>[] = [
     cell: ({ row }) => {
       const portfolio = row.original;
 
+      const [open, setOpen] = useState(false);
+
+      const queryClient = useQueryClient();
+      const { toast } = useToast();
+
+      const handleSuccessState = () => {
+        queryClient.invalidateQueries({ queryKey: ["portfolios"] });
+        toast({
+          title: "portfolio removed",
+          description: `portfolio with name: ${portfolio.name} has been successfully removed`,
+        });
+      };
+
+      const mutation = useMutation({
+        mutationFn: (id: number) => removePortfolio(id),
+        onSuccess: () => handleSuccessState(),
+      });
+
+      if (mutation.isPending) {
+        return <Spinner />;
+      }
+
       return (
         <div className="text-right">
-          <DropdownMenu>
+          <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0 text-end">
                 <span className="sr-only">Open menu</span>
@@ -78,15 +104,18 @@ export const columns: ColumnDef<Portfolio>[] = [
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="flex items-center gap-2"
-                onClick={() =>
-                  console.log(`remove portfolio with id: ${portfolio.id}`)
-                }
+                onClick={() => mutation.mutate(portfolio.id)}
               >
                 <Trash className="h-4 w-4" />
                 delete
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          {mutation.isError && (
+            <div className="text-red-500 text-sm !mt-2">
+              something went wrong. please try again later
+            </div>
+          )}
         </div>
       );
     },
