@@ -16,7 +16,7 @@ type IconProps = {
   className?: string;
 };
 
-export const getTypeIcon = (
+export const getPortfolioTypeIcon = (
   type: PortfolioType
 ): FunctionComponent<IconProps> => {
   switch (type) {

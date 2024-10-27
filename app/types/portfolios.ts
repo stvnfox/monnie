@@ -10,7 +10,6 @@ export const PORTFOLIO_TYPES = {
   TRAVEL: "travel", // Travel and vacation budgets
 } as const;
 
-// Type for TypeScript
 export type PortfolioType =
   (typeof PORTFOLIO_TYPES)[keyof typeof PORTFOLIO_TYPES];
 

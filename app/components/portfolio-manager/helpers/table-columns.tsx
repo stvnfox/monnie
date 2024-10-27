@@ -5,7 +5,7 @@ import { Eye, MoreHorizontal, Trash } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 import type { Portfolio } from "~/types/portfolios";
-import { getTypeIcon } from "./type-icons";
+import { getPortfolioTypeIcon } from "./type-icons";
 import { removePortfolio } from "~/queries/remove-portfolio";
 import { useToast } from "~/hooks/use-toast";
 
@@ -31,7 +31,7 @@ export const columns: ColumnDef<Portfolio>[] = [
     accessorKey: "name",
     cell: ({ row }) => {
       const portfolio = row.original;
-      const IconComponent = getTypeIcon(portfolio.type);
+      const IconComponent = getPortfolioTypeIcon(portfolio.type);
 
       return (
         <div className="flex items-center gap-2">

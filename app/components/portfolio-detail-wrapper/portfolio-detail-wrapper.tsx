@@ -5,7 +5,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import type { Portfolio } from "~/types/portfolios";
 
 import { Button } from "~/components/ui/button";
-
+import { RecordManager } from "~/components/record-manager/record-manager";
 interface PortfolioDetailWrapperProps {
   portfolio: Portfolio;
 }
@@ -23,6 +23,9 @@ export const PortfolioDetailWrapper: FunctionComponent<
             back to overview
           </Link>
         </Button>
+      </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        <RecordManager />
       </div>
       {JSON.stringify(portfolio)}
     </>
