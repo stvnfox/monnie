@@ -13,6 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as PortfolioIdImport } from './routes/portfolio/$id'
+import { Route as AuthSignUpSplatImport } from './routes/auth/sign-up.$'
+import { Route as AuthSignInSplatImport } from './routes/auth/sign-in.$'
 
 // Create/Update Routes
 
@@ -25,6 +27,18 @@ const IndexRoute = IndexImport.update({
 const PortfolioIdRoute = PortfolioIdImport.update({
   id: '/portfolio/$id',
   path: '/portfolio/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthSignUpSplatRoute = AuthSignUpSplatImport.update({
+  id: '/auth/sign-up/$',
+  path: '/auth/sign-up/$',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthSignInSplatRoute = AuthSignInSplatImport.update({
+  id: '/auth/sign-in/$',
+  path: '/auth/sign-in/$',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +60,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioIdImport
       parentRoute: typeof rootRoute
     }
+    '/auth/sign-in/$': {
+      id: '/auth/sign-in/$'
+      path: '/auth/sign-in/$'
+      fullPath: '/auth/sign-in/$'
+      preLoaderRoute: typeof AuthSignInSplatImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/sign-up/$': {
+      id: '/auth/sign-up/$'
+      path: '/auth/sign-up/$'
+      fullPath: '/auth/sign-up/$'
+      preLoaderRoute: typeof AuthSignUpSplatImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +82,51 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/portfolio/$id': typeof PortfolioIdRoute
+  '/auth/sign-in/$': typeof AuthSignInSplatRoute
+  '/auth/sign-up/$': typeof AuthSignUpSplatRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/portfolio/$id': typeof PortfolioIdRoute
+  '/auth/sign-in/$': typeof AuthSignInSplatRoute
+  '/auth/sign-up/$': typeof AuthSignUpSplatRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/portfolio/$id': typeof PortfolioIdRoute
+  '/auth/sign-in/$': typeof AuthSignInSplatRoute
+  '/auth/sign-up/$': typeof AuthSignUpSplatRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/portfolio/$id'
+  fullPaths: '/' | '/portfolio/$id' | '/auth/sign-in/$' | '/auth/sign-up/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/portfolio/$id'
-  id: '__root__' | '/' | '/portfolio/$id'
+  to: '/' | '/portfolio/$id' | '/auth/sign-in/$' | '/auth/sign-up/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/portfolio/$id'
+    | '/auth/sign-in/$'
+    | '/auth/sign-up/$'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PortfolioIdRoute: typeof PortfolioIdRoute
+  AuthSignInSplatRoute: typeof AuthSignInSplatRoute
+  AuthSignUpSplatRoute: typeof AuthSignUpSplatRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PortfolioIdRoute: PortfolioIdRoute,
+  AuthSignInSplatRoute: AuthSignInSplatRoute,
+  AuthSignUpSplatRoute: AuthSignUpSplatRoute,
 }
 
 export const routeTree = rootRoute
@@ -99,7 +142,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/portfolio/$id"
+        "/portfolio/$id",
+        "/auth/sign-in/$",
+        "/auth/sign-up/$"
       ]
     },
     "/": {
@@ -107,6 +152,12 @@ export const routeTree = rootRoute
     },
     "/portfolio/$id": {
       "filePath": "portfolio/$id.tsx"
+    },
+    "/auth/sign-in/$": {
+      "filePath": "auth/sign-in.$.tsx"
+    },
+    "/auth/sign-up/$": {
+      "filePath": "auth/sign-up.$.tsx"
     }
   }
 }
