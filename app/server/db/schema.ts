@@ -59,6 +59,5 @@ export const transactions = pgTable("transactions", {
   type: text("type").notNull().$type<TransactionType>(),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   description: text("description"),
-  date: timestamp("date").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
