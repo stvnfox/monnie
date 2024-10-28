@@ -23,6 +23,7 @@ export const portfolios = pgTable("portfolios", {
     .references(() => users.id)
     .notNull(),
   name: text("name").notNull(),
+  description: text("description"),
   type: text("type")
     .notNull()
     .default(PORTFOLIO_TYPES.PERSONAL)
@@ -30,22 +31,10 @@ export const portfolios = pgTable("portfolios", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const records = pgTable("records", {
+export const portfolioShares = pgTable("portfolio_shares", {
   id: serial("id").primaryKey(),
   portfolioId: integer("portfolio_id")
     .references(() => portfolios.id)
-    .notNull(),
-  name: text("name").notNull(),
-  description: text("description"),
-  startDate: date("start_date").notNull(),
-  endDate: date("end_date").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
-export const recordShares = pgTable("record_shares", {
-  id: serial("id").primaryKey(),
-  recordId: integer("record_id")
-    .references(() => records.id)
     .notNull(),
   userId: varchar("user_id")
     .references(() => users.id)
@@ -63,8 +52,8 @@ export const categories = pgTable("categories", {
 
 export const transactions = pgTable("transactions", {
   id: serial("id").primaryKey(),
-  recordId: integer("record_id")
-    .references(() => records.id)
+  portfolioId: integer("portfolio_id")
+    .references(() => portfolios.id)
     .notNull(),
   userId: varchar("user_id")
     .references(() => users.id)
