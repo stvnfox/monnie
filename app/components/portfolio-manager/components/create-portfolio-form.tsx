@@ -28,7 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { getTypeIcon } from "../helpers/type-icons";
+import { getPortfolioTypeIcon } from "../helpers/type-icons";
 
 type CreatePortfolioFormProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -100,7 +100,7 @@ export const CreatePortfolioForm: FunctionComponent<
                 </FormControl>
                 <SelectContent>
                   {PORTFOLIO_OPTIONS.map((option) => {
-                    const IconComponent = getTypeIcon(option.label);
+                    const IconComponent = getPortfolioTypeIcon(option.label);
 
                     return (
                       <SelectItem key={option.value} value={option.value}>

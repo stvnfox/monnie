@@ -40,7 +40,6 @@ type FormInputs = {
   type: "income" | "expense";
 };
 
-// Type for validated data (after transformation)
 type FormData = z.infer<typeof formSchema>;
 
 export const AddRecordForm: FunctionComponent = () => {
