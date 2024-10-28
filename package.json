@@ -15,6 +15,7 @@
   "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
   "dependencies": {
     "@clerk/tanstack-start": "^0.4.17",
+    "@clerk/themes": "^2.1.39",
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.10.1",
     "@radix-ui/react-dialog": "^1.1.2",

@@ -4,6 +4,7 @@ import { Outlet, ScrollRestoration } from "@tanstack/react-router";
 import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
 import { ClerkProvider } from "@clerk/tanstack-start";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { dark } from "@clerk/themes";
 
 import { Toaster } from "~/components/ui/toaster";
 
@@ -42,7 +43,7 @@ const queryClient = new QueryClient();
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{ baseTheme: dark }}>
       <QueryClientProvider client={queryClient}>
         <Html>
           <Head>
