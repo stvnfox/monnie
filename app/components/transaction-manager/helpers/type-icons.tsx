@@ -27,9 +27,9 @@ import {
   Phone,
   Gamepad,
 } from "lucide-react";
-import type { RecordCategory } from "~/types/records";
+import type { TransactionCategory } from "~/types/transactions";
 
-export const getRecordTypeIcon = (type: RecordCategory) => {
+export const getTransactionTypeIcon = (type: TransactionCategory) => {
   const iconMap = {
     // Income
     "Salary & Wages": <Wallet size={16} />,

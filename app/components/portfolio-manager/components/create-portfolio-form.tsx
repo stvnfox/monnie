@@ -3,7 +3,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "lucide-react";
 
 import { useToast } from "~/hooks/use-toast";
 import { createPortfolio } from "~/queries/create-portfolio";

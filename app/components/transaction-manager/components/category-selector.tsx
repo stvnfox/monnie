@@ -30,7 +30,7 @@ export const CategorySelect: FunctionComponent<CategorySelectProps> = ({
             <SelectLabel className="-ml-4 lowercase">{category}</SelectLabel>
             {options.map((option) => (
               <SelectItem key={option.value} value={option.value}>
-                <div className="flex items-center gap-2 lowercase">
+                <div className="flex items-center gap-2 lowercase truncate text-ellipsis">
                   <span>{option.icon}</span>
                   {option.label}
                 </div>

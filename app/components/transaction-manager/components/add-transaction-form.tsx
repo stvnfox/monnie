@@ -2,8 +2,15 @@ import type { FunctionComponent } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 
-import { RECORD_TYPE_OPTIONS } from "~/lib/record-type-options";
+import type { Portfolio } from "~/types/portfolios";
+import { addTransaction } from "~/queries/add-transaction";
+import { TRANSACTION_TYPE_OPTIONS } from "~/lib/transaction-type-options";
+import type {
+  TransactionCategoryValue,
+  TransactionType,
+} from "~/types/transactions";
 
 import { Button } from "~/components/ui/button";
 import { CategorySelect } from "./category-selector";
@@ -31,41 +38,60 @@ const formSchema = z.object({
     .transform(Number)
     .pipe(z.number().positive("amount must be greater than 0")),
   category: z.string().min(1, "category is required"),
+  description: z.string(),
   type: z.enum(["income", "expense"]),
 });
 
-type FormInputs = {
+export type FormInputs = {
   amount: string;
-  category: string;
-  type: "income" | "expense";
+  category: TransactionCategoryValue | "";
+  description: string;
+  type: TransactionType;
 };
 
-type FormData = z.infer<typeof formSchema>;
+interface AddTransactionFormProps {
+  portfolio: Portfolio;
+}
 
-export const AddRecordForm: FunctionComponent = () => {
+export const AddTransactionForm: FunctionComponent<AddTransactionFormProps> = ({
+  portfolio,
+}) => {
   const form = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       amount: "",
       category: "",
+      description: "",
       type: "income",
     },
   });
 
-  const onSubmit = (data: FormInputs) => {
-    const validatedData = data as unknown as FormData;
-    console.log(validatedData);
-  };
+  //   const onSubmit = (data: FormInputs) => {
+  //     const validatedData = data as unknown as FormData;
+  //     console.log(validatedData);
+  //   };
+
+  const mutation = useMutation({
+    mutationFn: (values: FormInputs) =>
+      addTransaction({
+        ...values,
+        portfolioId: portfolio.id,
+        userId: portfolio.userId,
+      }),
+  });
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <div className="flex space-x-4">
+      <form
+        onSubmit={form.handleSubmit(() => mutation.mutate(form.getValues()))}
+        className="space-y-4"
+      >
+        <div className="grid grid-cols-3 space-x-4">
           <FormField
             control={form.control}
             name="amount"
             render={({ field }) => (
-              <FormItem className="flex-1">
+              <FormItem className="col-span-1">
                 <FormLabel>amount</FormLabel>
                 <FormControl>
                   <Input
@@ -83,7 +109,7 @@ export const AddRecordForm: FunctionComponent = () => {
             control={form.control}
             name="category"
             render={({ field }) => (
-              <FormItem className="flex-1">
+              <FormItem className="col-span-2">
                 <FormLabel>category</FormLabel>
                 <CategorySelect onValueChange={field.onChange} />
                 <FormMessage />
@@ -91,6 +117,22 @@ export const AddRecordForm: FunctionComponent = () => {
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="col-span-1">
+              <FormLabel>
+                description{" "}
+                <span className="text-sm text-neutral-400">(optional)</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder="enter description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="type"
@@ -104,7 +146,7 @@ export const AddRecordForm: FunctionComponent = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {RECORD_TYPE_OPTIONS.map((option) => (
+                  {TRANSACTION_TYPE_OPTIONS.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
@@ -116,7 +158,7 @@ export const AddRecordForm: FunctionComponent = () => {
           )}
         />
         <Button type="submit" className="w-full">
-          add record
+          add transaction
         </Button>
       </form>
     </Form>

@@ -25,9 +25,10 @@ export const CreatePortfolioDialog: FunctionComponent = () => {
         <DialogHeader>
           <DialogTitle>create portfolio item</DialogTitle>
           <DialogDescription>
-            a portfolio is a way to organize your financial records and goals.
-            use it to group related budgets or projects, like personal expenses
-            or savings plans. give your portfolio a clear, descriptive name.
+            a portfolio is a way to organize your financial transactions and
+            goals. use it to group related budgets or projects, like personal
+            expenses or savings plans. give your portfolio a clear, descriptive
+            name.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
