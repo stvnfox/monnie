@@ -2,10 +2,11 @@ import type { FunctionComponent } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import type { Portfolio } from "~/types/portfolios";
 import { addTransaction } from "~/queries/add-transaction";
+import { useToast } from "~/hooks/use-toast";
 import { TRANSACTION_TYPE_OPTIONS } from "~/lib/transaction-type-options";
 import type {
   TransactionCategoryValue,
@@ -30,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { Spinner } from "~/components/ui/spinner";
 
 const formSchema = z.object({
   amount: z
@@ -66,10 +68,16 @@ export const AddTransactionForm: FunctionComponent<AddTransactionFormProps> = ({
     },
   });
 
-  //   const onSubmit = (data: FormInputs) => {
-  //     const validatedData = data as unknown as FormData;
-  //     console.log(validatedData);
-  //   };
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const handleSuccessState = () => {
+    queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    toast({
+      title: "transaction added",
+      description: "your transaction has been added",
+    });
+  };
 
   const mutation = useMutation({
     mutationFn: (values: FormInputs) =>
@@ -78,6 +86,7 @@ export const AddTransactionForm: FunctionComponent<AddTransactionFormProps> = ({
         portfolioId: portfolio.id,
         userId: portfolio.userId,
       }),
+    onSuccess: () => handleSuccessState(),
   });
 
   return (
@@ -157,8 +166,13 @@ export const AddTransactionForm: FunctionComponent<AddTransactionFormProps> = ({
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          add transaction
+        {mutation.isError && (
+          <div className="text-red-500 text-sm !mt-2">
+            something went wrong. please try again later
+          </div>
+        )}
+        <Button type="submit" disabled={mutation.isPending} className="w-full">
+          {mutation.isPending ? <Spinner /> : "add transaction"}
         </Button>
       </form>
     </Form>

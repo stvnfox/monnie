@@ -17,7 +17,7 @@ export const TransactionManager: FunctionComponent<TransactionManagerProps> = ({
       <CardHeader>
         <CardTitle>add transaction</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-2">
         <AddTransactionForm portfolio={portfolio} />
       </CardContent>
     </Card>
