@@ -10,6 +10,10 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { PORTFOLIO_TYPES, type PortfolioType } from "~/types/portfolios";
+import type {
+  TransactionCategoryValue,
+  TransactionType,
+} from "~/types/transactions";
 
 export const users = pgTable("users", {
   id: varchar("id").primaryKey(),
@@ -43,13 +47,6 @@ export const portfolioShares = pgTable("portfolio_shares", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const categories = pgTable("categories", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  type: text("type").notNull(), // 'income' or 'expense'
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
 export const transactions = pgTable("transactions", {
   id: serial("id").primaryKey(),
   portfolioId: integer("portfolio_id")
@@ -58,9 +55,8 @@ export const transactions = pgTable("transactions", {
   userId: varchar("user_id")
     .references(() => users.id)
     .notNull(),
-  categoryId: integer("category_id")
-    .references(() => categories.id)
-    .notNull(),
+  category: text("category").notNull().$type<TransactionCategoryValue>(),
+  type: text("type").notNull().$type<TransactionType>(),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   description: text("description"),
   date: timestamp("date").notNull(),

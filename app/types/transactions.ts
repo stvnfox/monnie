@@ -1,4 +1,4 @@
-export const RECORD_CATEGORIES = {
+export const TRANSACTION_CATEGORIES = {
   // Income
   SALARY: "Salary & Wages",
   BUSINESS: "Business Income",
@@ -39,15 +39,21 @@ export const RECORD_CATEGORIES = {
   PHONE: "Phone & Mobile",
 } as const;
 
-interface RecordOption {
+interface TransactionOption {
   label: string;
   value: string;
   icon: JSX.Element;
 }
 
 export interface GroupedOptions {
-  [category: string]: RecordOption[];
+  [category: string]: TransactionOption[];
 }
 
-export type RecordCategory =
-  (typeof RECORD_CATEGORIES)[keyof typeof RECORD_CATEGORIES];
+export type TransactionCategory =
+  (typeof TRANSACTION_CATEGORIES)[keyof typeof TRANSACTION_CATEGORIES];
+
+export type TransactionType = "income" | "expense";
+
+export type TransactionCategoryValue = Lowercase<
+  keyof typeof TRANSACTION_CATEGORIES
+>;
