@@ -57,3 +57,10 @@ export type TransactionType = "income" | "expense";
 export type TransactionCategoryValue = Lowercase<
   keyof typeof TRANSACTION_CATEGORIES
 >;
+
+export interface Transaction {
+  id: number;
+  category: TransactionCategoryValue;
+  description: string;
+  amount: number;
+}
