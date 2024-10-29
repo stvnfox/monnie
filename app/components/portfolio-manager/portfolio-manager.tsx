@@ -1,7 +1,7 @@
 import type { FunctionComponent } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { getPortfolioItems } from "~/queries/get-portfolio-items";
+import { getPortfolioItems } from "~/queries/portfolio/get-portfolio-items";
 import { columns } from "./helpers/table-columns";
 
 import { CreatePortfolioDialog } from "./components/create-portfolio-dialog";

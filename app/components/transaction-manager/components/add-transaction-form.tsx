@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import type { Portfolio } from "~/types/portfolios";
-import { addTransaction } from "~/queries/add-transaction";
+import { addTransaction } from "~/queries/transactions/add-transaction";
 import { useToast } from "~/hooks/use-toast";
 import { TRANSACTION_TYPE_OPTIONS } from "~/lib/transaction-type-options";
 import type {

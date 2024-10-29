@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useToast } from "~/hooks/use-toast";
-import { createPortfolio } from "~/queries/create-portfolio";
+import { createPortfolio } from "~/queries/portfolio/create-portfolio";
 import { PORTFOLIO_TYPES } from "~/types/portfolios";
 import { PORTFOLIO_OPTIONS } from "~/lib/portfolio-options";
 

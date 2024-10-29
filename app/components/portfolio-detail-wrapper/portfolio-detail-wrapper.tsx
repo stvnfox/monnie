@@ -25,10 +25,7 @@ export const PortfolioDetailWrapper: FunctionComponent<
           </Link>
         </Button>
       </div>
-      <div className="grid gap-6 md:grid-cols-2">
-        <TransactionManager portfolio={portfolio} />
-      </div>
-      {JSON.stringify(portfolio)}
+      <TransactionManager portfolio={portfolio} />
     </>
   );
 };

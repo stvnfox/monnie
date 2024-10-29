@@ -6,7 +6,7 @@ import { Link } from "@tanstack/react-router";
 
 import type { Portfolio } from "~/types/portfolios";
 import { getPortfolioTypeIcon } from "./type-icons";
-import { removePortfolio } from "~/queries/remove-portfolio";
+import { removePortfolio } from "~/queries/portfolio/remove-portfolio";
 import { useToast } from "~/hooks/use-toast";
 
 import { Button } from "~/components/ui/button";
