@@ -7,6 +7,7 @@ import type { Transaction } from "~/types/transactions";
 import { TransactionCategoryIcon } from "./type-icons";
 import { useToast } from "~/hooks/use-toast";
 import { removeTransaction } from "~/queries/transactions/remove-transaction";
+import { createCurrencyValue } from "./create-currency-value";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -54,7 +55,11 @@ export const columns: ColumnDef<Transaction>[] = [
   {
     header: () => <div className="text-right">amount</div>,
     accessorKey: "amount",
-    cell: ({ row }) => <div className="text-right">€{row.original.amount}</div>,
+    cell: ({ row }) => (
+      <div className="text-right">
+        {createCurrencyValue(Number(row.original.amount))}
+      </div>
+    ),
   },
   {
     id: "actions",
