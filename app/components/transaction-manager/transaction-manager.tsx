@@ -2,12 +2,13 @@ import type { FunctionComponent } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import type { Portfolio } from "~/types/portfolios";
+import type { TransactionType } from "~/types/transactions";
 import { getTransactionsForPortfolio } from "~/queries/transactions/get-transactions";
 import { columns } from "./helpers/table-columns";
+import { createCurrencyValue } from "./helpers/create-currency-value";
 
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 import { AddTransactionForm } from "./components/add-transaction-form";
-import { DataTable } from "../ui/data-table";
 import { TransactionTableWrapper } from "./components/transaction-table-wrapper";
 
 interface TransactionManagerProps {
@@ -25,6 +26,20 @@ export const TransactionManager: FunctionComponent<TransactionManagerProps> = ({
 
   const transactions = data?.data;
 
+  const getTransactionTypeTotal = (type: TransactionType) => {
+    return transactions
+      ? transactions.reduce((acc, transaction) => {
+          return transaction.type === type
+            ? acc + Number(transaction.amount)
+            : acc;
+        }, 0)
+      : 0;
+  };
+
+  const incomeTotal = getTransactionTypeTotal("income");
+  const expenseTotal = getTransactionTypeTotal("expense");
+  const netTotal = incomeTotal - expenseTotal;
+
   return (
     <>
       <div className="grid gap-6 md:grid-cols-2">
@@ -36,6 +51,12 @@ export const TransactionManager: FunctionComponent<TransactionManagerProps> = ({
             <AddTransactionForm portfolio={portfolio} />
           </CardContent>
         </Card>
+        <div>
+          {/* TODO: add chart with income and expense totals */}
+          <p>income total: {createCurrencyValue(incomeTotal)}</p>
+          <p>expense total: {createCurrencyValue(expenseTotal)}</p>
+          <p>net total: {createCurrencyValue(netTotal)}</p>
+        </div>
       </div>
       <div className="grid gap-6 md:grid-cols-2 mt-6">
         <TransactionTableWrapper
