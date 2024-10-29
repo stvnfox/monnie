@@ -4,6 +4,7 @@ import { Outlet, ScrollRestoration } from "@tanstack/react-router";
 import { Body, Head, Html, Meta, Scripts } from "@tanstack/start";
 import { ClerkProvider } from "@clerk/tanstack-start";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { dark } from "@clerk/themes";
 
 import { Toaster } from "~/components/ui/toaster";
@@ -54,6 +55,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <Toaster />
             <ScrollRestoration />
             <Scripts />
+            <ReactQueryDevtools initialIsOpen={false} />
           </Body>
         </Html>
       </QueryClientProvider>
