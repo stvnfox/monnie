@@ -4,9 +4,10 @@ import { Dashboard } from "~/components/dashboard/dashboard";
 import { NavigationComponent } from "~/components/navigation/navigation";
 import { createServerFn } from "@tanstack/start";
 import { getAuth } from "@clerk/tanstack-start/server";
+import { getWebRequest } from "vinxi/http";
 
-const authStateFn = createServerFn("GET", async (_, { request }) => {
-  const { userId } = await getAuth(request);
+const authStateFn = createServerFn({ method: "GET" }).handler(async () => {
+  const { userId } = await getAuth(getWebRequest());
 
   if (!userId) {
     throw redirect({

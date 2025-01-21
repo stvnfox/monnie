@@ -9,26 +9,34 @@ import { PortfolioDetailWrapper } from "~/components/portfolio-detail-wrapper/po
 import type { Portfolio } from "~/types/portfolios";
 import { db } from "~/server/db";
 import { portfolios } from "~/server/db/schema";
+import { getWebRequest } from "vinxi/http";
 
-const getPortfolio = createServerFn("GET", async (id: string, { request }) => {
-  const { userId } = await getAuth(request);
+const getPortfolio = createServerFn({ method: "GET" })
+  .validator((id: string) => {
+    console.log(id);
+    return id;
+  })
+  .handler(async (ctx) => {
+    const { userId } = await getAuth(getWebRequest());
 
-  if (!userId) {
-    throw redirect({
-      to: "/",
-    });
-  }
+    if (!userId) {
+      throw redirect({
+        to: "/",
+      });
+    }
 
-  const data = await db
-    .select()
-    .from(portfolios)
-    .where(eq(portfolios.id, Number(id)));
+    console.log(ctx.data);
 
-  return data[0];
-});
+    const data = await db
+      .select()
+      .from(portfolios)
+      .where(eq(portfolios.id, Number(ctx.data)));
+
+    return data[0];
+  });
 
 export const Route = createFileRoute("/portfolio/$id")({
-  loader: async ({ params }) => await getPortfolio(params.id),
+  loader: async ({ params }) => await getPortfolio({ id: params.id }),
   component: () => <PortfolioPage />,
 });
 

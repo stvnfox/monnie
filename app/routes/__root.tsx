@@ -13,22 +13,22 @@ import appCss from "../styles/app.css?url";
 import favicon from "../assets/favicon.ico?url";
 
 export const Route = createRootRoute({
-  meta: () => [
-    {
-      charSet: "utf-8",
-    },
-    {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1",
-    },
-    {
-      title: "monnie",
-    },
-  ],
-  links: () => [
-    { rel: "stylesheet", href: appCss },
-    { rel: "icon", href: favicon },
-  ],
+  // meta: () => [
+  //   {
+  //     charSet: "utf-8",
+  //   },
+  //   {
+  //     name: "viewport",
+  //     content: "width=device-width, initial-scale=1",
+  //   },
+  //   {
+  //     title: "monnie",
+  //   },
+  // ],
+  // links: () => [
+  //   { rel: "stylesheet", href: appCss },
+  //   { rel: "icon", href: favicon },
+  // ],
   component: RootComponent,
 });
 

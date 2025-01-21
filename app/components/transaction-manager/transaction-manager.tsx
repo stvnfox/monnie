@@ -10,6 +10,7 @@ import { createCurrencyValue } from "./helpers/create-currency-value";
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 import { AddTransactionForm } from "./components/add-transaction-form";
 import { TransactionTableWrapper } from "./components/transaction-table-wrapper";
+import { TransactionChart } from "./components/transaction-chart";
 
 interface TransactionManagerProps {
   portfolio: Portfolio;
@@ -51,12 +52,11 @@ export const TransactionManager: FunctionComponent<TransactionManagerProps> = ({
             <AddTransactionForm portfolio={portfolio} />
           </CardContent>
         </Card>
-        <div>
-          {/* TODO: add chart with income and expense totals */}
-          <p>income total: {createCurrencyValue(incomeTotal)}</p>
-          <p>expense total: {createCurrencyValue(expenseTotal)}</p>
-          <p>net total: {createCurrencyValue(netTotal)}</p>
-        </div>
+        <TransactionChart
+          income={incomeTotal}
+          expenses={expenseTotal}
+          total={netTotal}
+        />
       </div>
       <div className="grid gap-6 md:grid-cols-2 mt-6">
         <TransactionTableWrapper
